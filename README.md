@@ -32,7 +32,7 @@ for each continent as value.
 
 Example CSV file is provided and the examples for possible interactions are as follows:
 
-dict_country,dict_continent = main('Covid-data-for-project-2-sample.csv') 
+* dict_country,dict_continent = main('Covid-data-for-project-2-sample.csv') 
 
 The output returned are dictionaries where some data is presented below: 
    * dict_country['afghanistan'] 
