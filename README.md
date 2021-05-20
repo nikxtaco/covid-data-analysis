@@ -34,7 +34,7 @@ Example CSV file is provided and the examples for possible interactions are as f
 
 * dict_country,dict_continent = main('Covid-data-for-project-2-sample.csv') 
 
-The output returned are dictionaries where some data is presented below: 
+The output returned are dictionaries which can be accessed in the following ways: 
    * dict_country['afghanistan'] 
    * dict_country['italy'] 
    * dict_continent.keys() 
