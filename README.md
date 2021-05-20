@@ -17,16 +17,16 @@ Example CSV file is provided and the examples for possible interactions are as f
 Given a CSV file with data regarding the cases recorded in countries within each continent, calculates and returns the following:
 * A dictionary containing the country name as key and a list having the following data about  
 that country as value.  
-   * A list containing the total number of recorded positive cases of COVID-19 for each  
+   * A list containing the total number of recorded positive cases for each  
 month of the year. 
-   * A list containing the total number of recorded deaths due to COVID-19 for each month  
+   * A list containing the total number of recorded deaths for each month  
 of the year. 
    * A list containing the total number of days for each month of year, when the recorded  
-positive cases of COVID-19 for that month of the year were greater than the average  
+positive cases for that month of the year were greater than the average  
 recorded positive cases of that month of the year. 
    * A list containing the total number of days for each month of year, when the recorded  
-deaths due to COVID-19 for that month of the year were greater than the average  
-deaths due to COVID-19 for that month of the year. 
+deaths for that month of the year were greater than the average  
+deaths for that month of the year. 
 * A dictionary containing the continent name as key and a list having the data similar to above  
 for each continent as value.
 
