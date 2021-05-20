@@ -31,7 +31,9 @@ deaths due to COVID-19 for that month of the year.
 for each continent as value.
 
 Example CSV file is provided and the examples for possible interactions are as follows:
+
 dict_country,dict_continent = main('Covid-data-for-project-2-sample.csv') 
+
 The output returned are dictionaries where some data is presented below: 
    * dict_country['afghanistan'] 
    * dict_country['italy'] 
