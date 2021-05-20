@@ -4,12 +4,13 @@ A list of projects done to address various problem statements using python.
 
 ### 1. Analysis of Covid Cases in Countries
 
-#### Summary 
 Given a CSV file with data regarding the cases recorded in countries, calculates and returns one of the following depending on the command line input:
 * Statistics - calculates for each month, the minimum, maximum, average and standard deviation of the recorded cases across that month.
 * Correlation - calculates the correlation of each of the above results for any two countries.
 
-Example CSV file is provided and the examples for possible interactions are as follows:
+#### EXAMPLE 
+
+Sample CSV file is provided and the examples for possible interactions are as follows:
 * python main.py 'Covid-data-for-project_1_sample.csv' "France" "statistics"
 * python main.py 'Covid-data-for-project_1_sample.csv' ["france","italy"] "correlation"
 
@@ -31,7 +32,9 @@ deaths for that month of the year.
 * A dictionary containing the continent name as key and a list having the data similar to above  
 for each continent as value.
 
-Example CSV file is provided and the examples for possible interactions are as follows:
+#### EXAMPLE
+
+Sample CSV file is provided and the examples for possible interactions are as follows:
 
 * dict_country,dict_continent = main('Covid-data-for-project-2-sample.csv') 
 
