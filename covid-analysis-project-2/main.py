@@ -18,7 +18,7 @@ def columnchecker(datalist): # to find the index of the columns
     new_cases=0
     new_deaths=0    
     
-    line = datalist[0] # headers
+    line = datalist[0]
     country=line.index('location')
     continent=line.index('continent')
     date=line.index('date')
@@ -28,7 +28,7 @@ def columnchecker(datalist): # to find the index of the columns
     return country,continent,date,new_cases,new_deaths
     
 
-def countrylist(datalist,location):
+def countrylist(datalist,location): # returns the four lists for each country
     country_index,continent_index,date_index,newcase_index,newdeath_index = columnchecker(datalist)
     
     totalcase_permonth_list=[0]*12  
@@ -53,13 +53,13 @@ def countrylist(datalist,location):
             if len(date)==3:            
                 month_index=int(date[1])-1
                 casedays_list[month_index]+=1 
+                deathdays_list[month_index] +=1 
                 
                 if line[newcase_index].isnumeric() and int(line[newcase_index])>0:
                     totalcase_permonth_list[month_index] += int(line[newcase_index]) 
                     
                 if line[newdeath_index].isnumeric() and int(line[newdeath_index])>0:
                     totaldeath_permonth_list[month_index] += int(line[newdeath_index]) 
-                deathdays_list[month_index] +=1 
                  
     for i in range(12): 
     
@@ -82,11 +82,9 @@ def countrylist(datalist,location):
                 month_index= int(date[1])-1
                 
                 if line[newcase_index].isnumeric() and averagecase_permonth_list[month_index] < int(line[newcase_index]):
-                    #Checking whether the new case is higher than avg
                     casedays_moreavg[month_index] +=1
                         
                 if line[newdeath_index].isnumeric() and averagedeath_permonth_list[month_index] < int(line[newdeath_index]):
-                    #checking whether new death is higher than avg
                     deathdays_moreavg[month_index] +=1        
     
     final_list.append(totalcase_permonth_list)
@@ -119,11 +117,10 @@ def countrydictionary(datalist):
         
     return dict_country
 
-# EDITS FROM HERE ON
 
 def keyfinder_continent(datalist):
      continentlist=[]
-     country_index,continent_index,date_index,newcase_index,newdeath_index=columnchecker(datalist) #calling index function for headers
+     country_index,continent_index,date_index,newcase_index,newdeath_index=columnchecker(datalist)
      
      for line in datalist:         
          if line[continent_index] not in continentlist:
@@ -173,7 +170,8 @@ def morethan_continent(datalist,continent,avg1,avg2):
   newcase_sumlist = gen_list(days_list)
   newdeath_sumlist = gen_list(days_list)
 
-  for line in datalist: #to find the cases and death days higher than avg        
+  for line in datalist:
+
     if(line[continent_index] == continent):     
 
       date= line[date_index].split('/')
@@ -187,7 +185,8 @@ def morethan_continent(datalist,continent,avg1,avg2):
           if line[newdeath_index].isnumeric() and int(line[newdeath_index])>0:
             newdeath_sumlist[month_index][day_index] += int(line[newdeath_index])
 
-  for line in datalist: #to find the cases and death days higher than avg         
+  for line in datalist: 
+    
     if(line[continent_index] == continent):          
     
       date= line[date_index].split('/')
