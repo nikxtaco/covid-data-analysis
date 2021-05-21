@@ -1,3 +1,5 @@
+# COMMON FUNCTIONS
+
 def filelist(csvfile): # converts tabular data from file to a list of lists divided into rows
     datalist=[]
     infile=open(csvfile,'r')
@@ -11,7 +13,7 @@ def filelist(csvfile): # converts tabular data from file to a list of lists divi
     return datalist
 
 
-def columnchecker(datalist): # to find the index of the columns 
+def columnchecker(datalist): # to find the index of the required columns 
     country=0
     continent=0
     date=0
@@ -19,30 +21,33 @@ def columnchecker(datalist): # to find the index of the columns
     new_deaths=0    
     
     line = datalist[0]
-    country=line.index('location')
-    continent=line.index('continent')
-    date=line.index('date')
-    new_cases=line.index('new_cases')
-    new_deaths=line.index('new_deaths')
+    try:
+        country=line.index('location')
+        continent=line.index('continent')
+        date=line.index('date')
+        new_cases=line.index('new_cases')
+        new_deaths=line.index('new_deaths')
     
-    return country,continent,date,new_cases,new_deaths
+        return country,continent, date,new_cases,new_deaths
     
+    except (ValueError):
+        print('The headings do not exist.')
+        return None
+    
+
+# FUNCTIONS REQUIRED FOR GENERATING THE COUNTRY DICTIONARY
 
 def countrylist(datalist,location): # returns the four lists for each country
     country_index,continent_index,date_index,newcase_index,newdeath_index = columnchecker(datalist)
     
     totalcase_permonth_list=[0]*12  
     totaldeath_permonth_list=[0]*12 
-    
     averagecase_permonth_list=[0]*12 
     averagedeath_permonth_list=[0]*12 
-    
     casedays_list=[0]*12 
     deathdays_list=[0]*12
-    
     casedays_moreavg=[0]*12 
     deathdays_moreavg=[0]*12 
-    
     final_list=[]
     
     for line in datalist:              
@@ -95,7 +100,7 @@ def countrylist(datalist,location): # returns the four lists for each country
     return final_list
 
 
-def keyfinder_country(datalist):
+def keyfinder_country(datalist): # returns a list of all countries
      countrylist=[]
      country_index,continent_index,date_index,newcase_index,newdeath_index=columnchecker(datalist)
      
@@ -107,7 +112,7 @@ def keyfinder_country(datalist):
      return countrylist
 
 
-def countrydictionary(datalist):
+def countrydictionary(datalist): # gets the list of countries and each countries value lists separately, and joins them together to return the final country dictionary
     dict_country={}
     listofcountries=keyfinder_country(datalist)
     
@@ -118,7 +123,9 @@ def countrydictionary(datalist):
     return dict_country
 
 
-def keyfinder_continent(datalist):
+# FUNCTIONS REQUIRED FOR GENERATING THE CONTINENT DICTIONARY
+
+def keyfinder_continent(datalist): # returns a list of all continents
      continentlist=[]
      country_index,continent_index,date_index,newcase_index,newdeath_index=columnchecker(datalist)
      
@@ -130,7 +137,7 @@ def keyfinder_continent(datalist):
      return continentlist
 
 
-def continentdictionary(datalist):
+def continentdictionary(datalist): # gets the list of continents and each continents value lists separately, and joins them together to return the final continent dictionary
     dict_continent={}
     listofcontinents=keyfinder_continent(datalist)
     
@@ -141,7 +148,7 @@ def continentdictionary(datalist):
     return dict_continent
         
 
-def contries_in_continent(datalist, location):
+def contries_in_continent(datalist, location): # returns the list of countries with the continent which is passed as an argument
   country_index,continent_index,date_index,newcase_index,newdeath_index=columnchecker(datalist)
   countrylist = []
   for line in datalist:              
@@ -151,7 +158,7 @@ def contries_in_continent(datalist, location):
   return countrylist
 
 
-def gen_list(input_list):
+def gen_list(input_list): # generates a list of lists capable of storing the sums of new cases or new deaths for each day of the year
     output = []
     for i in range(12):
         entry = []
@@ -161,7 +168,7 @@ def gen_list(input_list):
     return output
 
 
-def morethan_continent(datalist,continent,avg1,avg2):
+def morethan_continent(datalist,continent,avg1,avg2): # returns the number of days greater than the respective averages for each month which are passed as arguments
   country_index,continent_index,date_index,newcase_index,newdeath_index=columnchecker(datalist)
   morethanavg_case = [0] * 12
   morethanavg_death = [0] * 12
@@ -205,7 +212,7 @@ def morethan_continent(datalist,continent,avg1,avg2):
   return morethanavg_case, morethanavg_death   
 
 
-def listcontinent(datalist, continent):
+def listcontinent(datalist, continent): # returns the four required lists for each continent
   countrylist = contries_in_continent(datalist, continent)
   sum1 = [0] * 12
   sum2 = [0] * 12
@@ -243,13 +250,26 @@ def listcontinent(datalist, continent):
 
   return final_list
 
+# MAIN FUNCTION
 
 def main(csvfile):
-  datalist= filelist(csvfile)
-  dict_country = countrydictionary(datalist)
-  print(dict_country['Angola'])
-  dict_continent = continentdictionary(datalist)
-  print(dict_continent.keys())
-  print(dict_continent['Oceania'])
-
-main('csvfile.csv')
+  try: 
+        datalist = filelist(csvfile)
+        if columnchecker(datalist) == None:
+          return None, None
+        else:
+          dict_country = countrydictionary(datalist)  
+          dict_continent = continentdictionary(datalist)
+          return dict_country, dict_continent
+    
+  # Error Handing
+  except (IOError):
+        print ("File not found.")
+        return None, None
+    
+  except (TypeError):
+        print ("CSV file invalid.")
+        return None, None
+    
+dict_country,dict_continent=main('csvfile.csv')
+print(dict_continent.keys())
